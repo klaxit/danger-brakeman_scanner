@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "bundler/setup"
+
+require "brakeman"
+
+# Print methods of an object with some filtering.
+def m(instance)
+  noizy_methods = Object.instance_methods + Object.methods + Enumerable.methods
+  puts((instance.methods - noizy_methods).sort)
+end
+
+# A safe app to run Brakeman through
+#
+# @example
+#   Brakeman.run(safe_rails_app_path)
+def safe_rails_app_path
+  File.expand_path("../spec/fixtures/safe_rails_app", __dir__)
+end
+
+# A dangerous app to run Brakeman through
+#
+# @example
+#   Brakeman.run(dangerous_rails_app_path)
+def dangerous_rails_app_path
+  File.expand_path("../spec/fixtures/dangerous_rails_app", __dir__)
+end
+
+require "irb"
+IRB.start(__FILE__)
