@@ -1,0 +1,38 @@
+# Ruby CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-ruby/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.6
+        environment:
+          - BUNDLE_JOBS: 4
+          - BUNDLE_RETRY: 3
+          - BUNDLE_PATH: vendor/bundle
+    steps:
+      - checkout
+      - run:
+          name: Configuring Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(tail -1 Gemfile.lock | xargs)' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler -v $BUNDLER_VERSION
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ arch }}-{{ checksum "Gemfile.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-{{ arch }}-
+      - run:
+          name: Install dependencies
+          command: |
+            bundle check || bundle install --jobs=4 --retry=3
+      - save_cache:
+          key: v1-dependencies-{{ arch }}-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      - run:
+          name: Run tests
+          command: make

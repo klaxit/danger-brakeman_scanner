@@ -7,3 +7,4 @@ inherit_from:
 AllCops:
   Exclude:
     - "spec/**/*"
+    - "vendor/**/*"

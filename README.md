@@ -1,4 +1,4 @@
-# Danger Brakeman Plugin
+# Danger Brakeman Plugin [![CircleCI](https://circleci.com/gh/klaxit/danger-brakeman_scanner.svg?style=svg)](https://circleci.com/gh/klaxit/danger-brakeman_scanner)
 
 A [Danger] plugin for [Brakeman] security static analysis.
 
