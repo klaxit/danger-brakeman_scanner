@@ -7,6 +7,10 @@
 /pkg/
 /spec/reports/
 /tmp/
+/*.gem
+
+# A gem should base itself on the .gemspec file only.
+/Gemfile.lock
 
 # rspec failure tracking
 .rspec_status

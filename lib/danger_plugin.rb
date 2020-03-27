@@ -4,11 +4,11 @@
 #
 # @example Run with default configuration in application directory
 #
-#   brakeman.run
+#   brakeman_scanner.run
 #
 # @see https://github.com/presidentbeef/brakeman
 # @tags brakeman, security, ruby
-class Danger::DangerBrakeman < Danger::Plugin
+class Danger::DangerBrakemanScanner < Danger::Plugin
   require "brakeman"
 
   # Run a Brakeman scan over current application.
@@ -25,3 +25,11 @@ class Danger::DangerBrakeman < Danger::Plugin
             "(https://brakemanscanner.org/docs/ignoring_false_positives/)."
   end
 end
+
+# (see Danger::DangerBrakemanScanner)
+#
+# @example Use the alias for conveniance
+#
+#   brakeman.run
+#
+class Danger::DangerBrakeman < Danger::DangerBrakemanScanner; end

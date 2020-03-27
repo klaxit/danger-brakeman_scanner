@@ -2,6 +2,7 @@
 
 RSpec.describe Danger::DangerBrakeman do
   it "should be a plugin" do
+    expect(Danger::DangerBrakemanScanner.new(nil)).to be_a Danger::Plugin
     expect(Danger::DangerBrakeman.new(nil)).to be_a Danger::Plugin
   end
 
@@ -11,7 +12,7 @@ RSpec.describe Danger::DangerBrakeman do
   describe "with Dangerfile" do
     before do
       @dangerfile = testing_dangerfile
-      @plugin = @dangerfile.brakeman
+      @plugin = [@dangerfile.brakeman, @dangerfile.brakeman_scanner].sample
     end
 
     it "should print report and fail for dangerous apps" do
