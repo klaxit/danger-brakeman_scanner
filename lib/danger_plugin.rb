@@ -19,8 +19,8 @@ class Danger::DangerBrakemanScanner < Danger::Plugin
     tracker = Brakeman.run(options)
 
     warnings = if tracker.ignored_filter
-                 tracker.warnings.select do |warning|
-                   !tracker.ignored_filter.ignored_warnings.include?(warning)
+                 tracker.warnings.reject do |warning|
+                   tracker.ignored_filter.ignored_warnings.include?(warning)
                  end
                else
                  tracker.warnings
