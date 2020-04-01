@@ -17,7 +17,15 @@ class Danger::DangerBrakemanScanner < Danger::Plugin
   # @return [void]
   def run(options = File.dirname(Kernel.caller_locations.first.absolute_path))
     tracker = Brakeman.run(options)
-    return if tracker.warnings.empty? && tracker.errors.empty?
+
+    warnings = if tracker.ignored_filter
+                 tracker.warnings.select do |warning|
+                   !tracker.ignored_filter.ignored_warnings.include?(warning)
+                 end
+               else
+                 tracker.warnings
+               end
+    return if warnings.empty? && tracker.errors.empty?
 
     markdown tracker.report.to_markdown
     failure "Brakeman static analysis detected issues in the code. " \

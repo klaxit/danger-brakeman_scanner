@@ -30,5 +30,11 @@ RSpec.describe Danger::DangerBrakeman do
       expect(@dangerfile.status_report[:errors]).to be_empty
       expect(@dangerfile.status_report[:markdowns]).to be_empty
     end
+
+    it "should do nothing for ignored warnings" do
+      @plugin.run(File.expand_path("fixtures/dangerous_but_ignored_rails_app", __dir__))
+      expect(@dangerfile.status_report[:errors]).to be_empty
+      expect(@dangerfile.status_report[:markdowns]).to be_empty
+    end
   end
 end

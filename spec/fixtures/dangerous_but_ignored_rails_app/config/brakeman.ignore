@@ -1,0 +1,26 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "63581d6be25ead200e4260fc0de0d799643fe8ead1aa89405dd33e75865b31a9",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/user.rb",
+      "line": 5,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.execute(\"SELECT * FROM #{user_input}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "User",
+        "method": "dangerous_method"
+      },
+      "user_input": "user_input",
+      "confidence": "Medium",
+      "note": "Life is too short to care"
+    }
+  ],
+  "updated": "2020-04-01 10:55:20 +0200",
+  "brakeman_version": "4.8.0"
+}
