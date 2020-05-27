@@ -1,10 +1,12 @@
-BE = bundle exec
-
+BE ?= bundle exec
+VERSION = $$(ruby -r ./lib/version.rb -e 'puts DangerBrakemanScanner::VERSION')
 .PHONY: default
 default: spec
 
 .PHONY: publish
 publish: clean spec
+	git tag v$(VERSION)
+	git push origin v$(VERSION)
 	gem build
 	gem push *.gem
 
@@ -25,4 +27,4 @@ docs:
 
 .PHONY: clean
 clean:
-	rm *.gem
+	rm -f *.gem
