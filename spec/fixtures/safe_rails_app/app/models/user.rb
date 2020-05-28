@@ -1,9 +1,7 @@
 class User < ActiveRecord::Base
-
-
-  # Yep, this is not an issue according to Brakeman.
-  # https://github.com/presidentbeef/brakeman/issues/1469
-  def not_so_dangerous_method(user_input)
-    ActiveRecord::Base.connection.execute "SELECT * FROM #{user_input}".squish
+  # https://xkcd.com/327/
+  def safe_method(user_input)
+    conn = ActiveRecord::Base.connection
+    conn.execute "SELECT * FROM #{conn.quote_table_name(user_input)}"
   end
 end
